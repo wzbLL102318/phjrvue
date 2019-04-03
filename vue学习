@@ -1,0 +1,71 @@
+
+组件库是做UI和前端日常需求中经常用到的
+把一个按钮，导航，列表之类的元素封装起来，方便日常使用
+调用方法只需直接写上<qui-button></qui-button>或者<qui-nav></qui-nav>
+
+components存放具体组件
+cloud_page存放页面
+
+路由跳转
+import Vue from 'vue'
+import Router from 'vue-router'
+// 引用页面模板->供路由使用
+import index from '../pages/index.vue'
+import pageQuiButton from '../pages/pageQuiButton.vue'
+import pageQuiList from '../pages/pageQuiList.vue'
+import pageQuiNav from '../pages/pageQuiNav.vue'
+
+Vue.use(Router)
+
+export default new Router({
+  routes: [
+    {
+    // 首页：http://localhost:8080/#/
+      path: '/',
+      name: 'index',
+      component: index
+    },
+    {
+    // 按钮子页：http://localhost:8080/#/btn
+      path: '/btn',
+      name: 'btn',
+      component: pageQuiButton
+    },
+    {
+    // 列表子页：http://localhost:8080/#/list
+      path: '/list',
+      name: 'list',
+      component: pageQuiList
+    },
+    {
+    // 导航子页：http://localhost:8080/#/nav
+      path: '/nav',
+      name: 'nav',
+      component: pageQuiNav
+    }
+  ]
+})
+
+具体每一页的内容分别对应每一页的.vue文件，不知大家是否还记得入口页App.vue，这个文件承载着一些公用的元素，还有就是一个路由容器，我们的首页index.vue到时候也是挂载在路由容器中的，入口App.vue的代码
+<template>
+  <div id="app">
+  /*
+  h1标签是一个公用元素，也就是说到时候每个子页面都会带着这个h1，他的作用就是方便我们快速回到首页，子页面的内容会注入到router-view中
+   */
+    <h1 class="page-title"><a href="#/">开发组件库</a></h1>
+    <router-view></router-view>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'app'
+}
+</script>
+
+/*
+style标签里面直接写样式，也可以直接引入一个样式文件，scoped关键字表示这个样式是私有的，也就是说，即使两个组件写着一样的#app{}样式也不会冲突，程序会加上命名空间，这也就是为什么在script标签中有个name参数
+ */
+<style scoped>
+  @import './assets/css/App.css';
+</style>
